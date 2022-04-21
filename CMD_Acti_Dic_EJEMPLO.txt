@@ -1,0 +1,55 @@
+Ver todos los comandos
+
+Start-Process powershell -Verb runAs
+
+Get-Command -Module ActiveDirectory
+Get-Command New-ADUser -Syntax
+Get-ADUser -Filter "*"
+
+Get-ADUser -Filter 'Name -like "Cindy*"'
+
+$Direccion_Usuario=Get-ADUser -Filter 'Name -like "NamePrueba*"'| select DistinguishedName
+
+if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit }
+$NewUserParameters = @{
+"GivenName" = "NamePrueba"
+"Surname" = "apellidoPrueba"
+"Name" = "NamePrueba apellidoPrueba"
+"DisplayName" ="NamePrueba apellidoPrueba"
+"AccountPassword" = (ConvertTo-SecureString "contra_prueba2" -AsPlainText -Force)
+"ChangePasswordAtLogon" = $true
+"path"= "OU=Operaciones,OU=Dirección Desarrollo,OU=Usuarios,DC=edemco,DC=local"
+"UserPrincipalName"="CorreoPrueba@edemco.co"
+"SamAccountName" ="CorreoPruebas"
+"email" = "CorreoPrueba@edemco.co"
+"description" = "solo Prueba"
+"OfficePhone" ="300000"
+"HomePage" = "Pagina.com.co"
+"Organization" ="edemco"
+"Title" = "Puesto_Prueba"
+"Department" ="Depart_Prueba"
+"Enabled" = $true
+}
+New-AdUser @NewUserParameters
+
+
+$Direccion_Usuario=Get-ADUser -Filter 'Name -like NamePrueba apellidoPrueba"'| select DistinguishedName
+Add-ADGroupMember -Identity "Office 365" -Members $Direccion_Usuario
+Add-ADGroupMember -Identity "Navegacion_Restringido" -Members $Direccion_Usuario
+Add-ADGroupMember -Identity "VPN_Forti" -Members $Direccion_Usuario
+Add-ADGroupMember -Identity "Usuarios TS" -Members $Direccion_Usuario
+
+
+Get-ADPrincipalGroupMembership -Identity "OU=NamePrueba,OU=Operaciones,OU=Dirección Desarrollo,OU=Usuarios,DC=edemco,DC=local"
+Get-ADUser -Filter * -SearchBase "OU=NamePrueba,OU=Operaciones,OU=Dirección Desarrollo,OU=Usuarios,DC=edemco,DC=local"
+
+Get-ADGroup -SearchBase "OU=Operaciones,OU=Dirección Desarrollo,OU=Usuarios,DC=edemco,DC=local"
+
+
+net user "NamePrueba" /domain
+net user "carlos.jaramillo" /domain
+Telefono: 4446500
+Descip: El cargo
+En organizacion, Puesto : Cargo
+		Departamento: EDEMCO
+		Organiza: EDEMCO
