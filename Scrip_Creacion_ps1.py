@@ -20,31 +20,42 @@ import sys
 # print(sys.argv[10])
 # print(sys.argv[11])
 
+
+# print(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5],sys.argv[6],sys.argv[7],sys.argv[8])
+
 Nombre=sys.argv[1]
 Apellido=sys.argv[2]
 Usuario=sys.argv[3]
 Grupo=sys.argv[4].replace("¾", "ó")
-subGrupo=sys.argv[5]
+subGrupo=sys.argv[5].replace("¾", "ó")
 Contrasena=sys.argv[6]
-
-Grupo="Dirección de Crecimiento"
-subGrupo="Proyectos Construcción"
-sub_subGrupo="Ternium"
-
 Cargo=sys.argv[7]
 Office=sys.argv[8]
-sub_subGrupo=sys.argv[9]
+sub_subGrupo=sys.argv[9].replace("¾", "ó")
 
+# Nombre='nombre_prueba'
+# Apellido='apellido_prueba'
+# Usuario='prueba_test_1'
+# Grupo='Direccion Gestion'.replace("¾", "ó")
+# subGrupo='Gerencia Logística'.replace("¾", "ó")
+# Contrasena='Edemco2022*'
+# Cargo='ALMACENISTA'
+# Office='Ninguno'
+# sub_subGrupo='Equipos'.replace("¾", "ó")
 
-if len(sub_subGrupo) > 2:
-    string_direccion='"OU='+sub_subGrupo+',OU='+subGrupo+',OU='+Grupo.replace("¾", "ó")
-    
+if subGrupo == 'Ninguno':
+    string_direccion='OU='+Grupo.replace("¾", "ó")
 else:
-    string_direccion='"OU='+subGrupo+',OU='+Grupo.replace("¾", "ó")
+    if sub_subGrupo == 'Ninguno':
+        string_direccion='"OU='+subGrupo+',OU='+Grupo.replace("¾", "ó")
+        
+    else:
+        
+        string_direccion='"OU='+sub_subGrupo+',OU='+subGrupo+',OU='+Grupo.replace("¾", "ó")
 
 
 
-print(Nombre,Apellido,Usuario,Grupo,subGrupo,Contrasena,Cargo,Office)
+print(Nombre,Apellido,Usuario,Grupo,subGrupo,sub_subGrupo,Contrasena,Cargo,Office)
 
 with open(r'C:\Users\lambda.analytics\Desktop\Crear_Usuario.ps1', 'w') as f:
     f.write('\r\n')
@@ -90,5 +101,4 @@ with open(r'C:\Users\lambda.analytics\Desktop\Grupo_Usuario.ps1', 'w') as f:
     else:
         print("Sin nivel office")
         
-    
     
